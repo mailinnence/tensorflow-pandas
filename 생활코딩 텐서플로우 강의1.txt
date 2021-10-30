@@ -1,0 +1,755 @@
+딥러닝 
+https://www.youtube.com/playlist?list=PLl1irxoYh2wyLwJutUZx5Q_QEEDZoXBnz
+---------------------------------------------------------------------------------------------------
+1강-오리엔테이션
+희귀 >> 숫자로 대한 결과를 예상
+분류 >> 카테고리, 범주형 결과를 예상
+
+ex)유명한 알고리즘
+DecisionTree, RandomForest, KNN, SVM, NeuralNetwork
+
+이 강의는 
+NeuralNetwork
+사람의 두뇌가 동작하는 방법을 모방해서 기계가 학습할 수 있도록 해주는 알고리즘
+최근에는 딥러닝이라고 불린다.
+
+텐서플로우(라이브러리)를 사용한다
+비슷한 라이브러리로는 pytorch, caffe theano 가 있다
+
+라이브라리	pytorch, caffe theano,tensorflow
+알고리즘		DecisionTree, RandomForest, KNN, SVM, NeuralNetwork
+문제		지도학습
+---------------------------------------------------------------------------------------------------
+	
+
+---------------------------------------------------------------------------------------------------
+2강-목표와 전략
+1.파이썬 기초
+2.데이터 입문
+3.머신러닝 이해
+4.딥러닝의 원리
+5.딥러닝 구현
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+3강-지도학습
+1.과거의 데이터를 준비한다 		 	원인(독립) >> 결과(종속)
+2.모델(머신러닝의 판단력)의 구조를 만든다
+3.데이터로 모델을 학습(FIT)를 합니다
+4.모델을 이용한다
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+4강-환경설정
+데이터과학+머신러닝의 도구	  >>  jupyter notebook
+구글 colaboratory가 이를 제공한다 
+또는 그냥 파이썬 pip기능을 이용하여 deep learning 라이브러리를 이용하는 방법이 있다 
+
+구글 드라이브 >> 새로만들기 >> 더보기 >>  검색에 colaboratory검색 및 설치
+
+구글 드라이브 >> 새로만들기 >> 더보기 >> google colaboratory 를 눌러서 파일을 추가하여 사용
+ctrl enter 실행
+shift enter 다음 쉘로 넘어감 
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+5강-표를 다루는 판다스
+표에 관점에서 칼럼은 변수명을 의미한다
+원인 독립변수
+결과 종속변수
+판다스를 이용하여 표의 칼럼을 변수에 담아서 코딩할 수 있다.
+
+사진1 참조
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+6강-표를 다루는 판다스(실습)
+https://github.com/blackdew/tensorflow1/blob/master/practice1-pandas.ipynb
+
+1.과거의 데이터를 준비한다 		 	
+2.모델(머신러닝의 판단력)의 구조를 만든다
+3.데이터로 모델을 학습(FIT)를 합니다
+4.모델을 이용한다
+
+
+
+
+1.데이터 준비하기 
+1-1.데이터를 불러온다
+1-2.종속변수와 독립변수로 분리한다.
+1-3.실습을 통해 배울 도구들
+
+*파일 읽어오기: read_csv('/경로/파일명.csv')
+*모양 확인하기: 데이터.shape
+*칼럼 선택하기: 데이터[['칼럼명1', '칼럼명2', '칼럼명3']]
+*칼럼 이름 출력하기: 데이터.columns
+*맨 위 5개 관측치 출력하기: 데이터.head()
+
+12강참조
+colab에 폴더에 있는 파일을 업로드하고 우클릭 경로 복사를 하여 이를 활용하여 파일경로를 
+가져올 수 있다
+
+
+import pandas as pd
+# 파일로부터 데이터 읽어오기
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/lemonade.csv'
+레모네이드 = pd.read_csv(파일경로)
+
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/boston.csv'
+보스턴 = pd.read_csv(파일경로)
+
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/iris.csv'
+아이리스 = pd.read_csv(파일경로)
+
+# 데이터의 모양확인
+print(레모네이드.shape)
+print(보스턴.shape)
+print(아이리스.shape)
+#이렇게하면
+#--------------------
+#온도,판매량
+#20, 40
+#21, 42
+#22, 44
+#23, 46
+#24, 48
+#25, 50
+#--------------------
+#이런 표를 (6,2)로 출력한다 즉 6열 2행 을 의미한다.
+#(열(세로),행(가로))
+
+
+
+#독립변수와 종속변수를 분리하기 위해 칼럼을 출력한다
+# 데이터 칼럼이름 확인
+print(레모네이드.columns)
+print(보스턴.columns)
+print(아이리스.columns)
+
+#출력 시 표의 변수들이 출력된다
+#Index(['온도', '판매량'], dtype='object')
+#Index(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',
+       'ptratio', 'b', 'lstat', 'medv'],
+      dtype='object')
+#Index(['꽃잎길이', '꽃잎폭', '꽃받침길이', '꽃받침폭', '품종'], dtype='object')
+
+
+# 독립변수와 종속변수 분리 
+독립 = 레모네이드[['온도']]
+종속 = 레모네이드[['판매량']]
+print(독립.shape, 종속.shape)
+#이러면 (6,1) (6,1) 이유는 지저한 것의 모양만 출력하기 때문
+
+독립 = 보스턴[['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax','ptratio', 'b', 'lstat']]
+종속 = 보스턴[['medv']]
+print(독립.shape, 종속.shape)
+#(506, 13) (506, 1)
+
+
+독립 = 아이리스[['꽃잎길이', '꽃잎폭', '꽃받침길이', '꽃받침폭']]
+종속 = 아이리스[['품종']]
+print(독립.shape, 종속.shape)
+#(150, 4) (150, 1)
+
+레모네이드.head()
+보스턴.head()
+아이리스.head()
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+7강-7. 레모네이드 판매 예측
+8강-손실
+9강-실습
+
+# 라이브러리 사용
+import tensorflow as tf
+import pandas as pd
+
+# 1.데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/lemonade.csv'
+레모네이드 = pd.read_csv(파일경로)
+레모네이드.head()
+
+#-----------------------------
+#온도	판매량
+#0	20	40
+#1	21	42
+#2	22	44
+#3	23	46
+#4	24	48
+#-----------------------------
+
+
+# 종속변수, 독립변수
+독립 = 레모네이드[['온도']]
+종속 = 레모네이드[['판매량']]
+print(독립.shape, 종속.shape)
+
+#2. 모델을 만듭니다. 사진 2번 참조
+X = tf.keras.layers.Input(shape=[1])		#독립변수 shape=[독립변수갯수] 
+Y = tf.keras.layers.Dense(1)(X)		#종속변수 Dense(종속변수갯수)(독립변수의 모델을 받고 있는 변수)
+model = tf.keras.models.Model(X, Y)		#Model(독립, 종속)		
+model.compile(loss='mse')
+
+
+#3. 모델을 학습시킵니다. 
+model.fit(독립, 종속, epochs=10000, verbose=0)		#epochs=학습횟수 여기서 verbose=0 실행되는 과정을 볼건지 말건지의 여부로
+model.fit(독립, 종속, epochs=10)			#verbose=0 를 넣으면 과정을 보지 않을 수 있다
+#						#학습 후 10번정도 진행손실을 보는 이유는 손실량을 체크하여 학습량이 충분했는지 확인하기 위해서이다
+#---------------------------------------------------------------------------------------
+#Epoch 1/10			현재 몇번째 반복인지 걸린 시간은 어느정도인지 손실량은 어느정도인지 볼 수 있다
+#				손실량이 적어야 정확한 값에 가까운 값을 얻을 수 있다
+#				때문에 손실량이 최소 0밑으로 계속 더 작아질때까지 학습 횟수를 높여야 한다
+#1/1 [==============================] - 0s 6ms/step - loss: 1.4164e-04
+#Epoch 2/10
+#1/1 [==============================] - 0s 5ms/step - loss: 1.4169e-04
+#Epoch 3/10
+#1/1 [==============================] - 0s 5ms/step - loss: 1.4174e-04
+#Epoch 4/10
+#1/1 [==============================] - 0s 5ms/step - loss: 1.4176e-04
+#Epoch 5/10
+#1/1 [==============================] - 0s 5ms/step - loss: 1.4171e-04
+#Epoch 6/10
+#1/1 [==============================] - 0s 17ms/step - loss: 1.4163e-04
+#Epoch 7/10
+#1/1 [==============================] - 0s 5ms/step - loss: 1.4163e-04
+#Epoch 8/10
+#1/1 [==============================] - 0s 6ms/step - loss: 1.4164e-04
+#Epoch 9/10
+#1/1 [==============================] - 0s 12ms/step - loss: 1.4170e-04
+#Epoch 10/10
+#1/1 [==============================] - 0s 7ms/step - loss: 1.4178e-04
+-------------------------------------------------------------------------------------------------------
+
+# 4.모델을 이용합니다. 
+print(model.predict(독립),model.predict(종속))		#결과보기
+print(model.predict([[15]]))				#print(model.predict([[값 or 변수]]))
+
+model.predict([[1502]])
+model.predict([[152]])
+model.predict([[15022]])
+model.predict([[771502]])
+model.predict([[881502]])
+model.predict([[91502]])
+
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+10강-보스턴 집값 예측
+#여기서 알아야 할 것이 중앙값,이상치 등 통계에 대한 내용을 조금 공부를 하고 오면 좋다
+#안해도 통계쪽으로 안 갈거라면 상관없다
+
+통계를 조금 설명하면 집단을 대표하는 평균값은 양극화가 심해지면 
+전체집단을 대표하기 애매하다. 이럴떈 편군값을 '이상치'라고 한다 
+이땐 '중앙값'을 이용한다
+
+# 라이브러리 사용
+import tensorflow as tf
+import pandas as pd
+
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/boston.csv'
+보스턴 = pd.read_csv(파일경로)
+print(보스턴.columns)
+보스턴.head()
+
+# 독립변수, 종속변수 분리 
+독립 = 보스턴[['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax','ptratio', 'b', 'lstat']]
+
+#-------------------------------------------------
+#crim	범죄율
+#chas	강변
+#rm	평균방수
+#tax	재산세세율
+#ptratio	학생교사비율
+#lstat	하위계층비율
+#-------------------------------------------------
+
+종속 = 보스턴[['medv']]
+print(독립.shape, 종속.shape)
+
+# 2. 모델의 구조를 만듭니다
+X = tf.keras.layers.Input(shape=[13])
+Y = tf.keras.layers.Dense(1)(X)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+#이 코드는 독립 ,종속을 설정해주면 알아서 그에 해당하는 공식을 만들어준다...ㄷㄷ 사진 4 참고
+
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=1000, verbose=0)
+model.fit(독립, 종속, epochs=10)
+
+# 4. 모델을 이용합니다
+print(model.predict(독립[5:10]))
+# 종속변수 확인
+print(종속[5:10])
+
+
+#모델의 수식 확인
+print(model.get_weights())
+
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+11강-수식과 퍼셉트론
+model.compile(loss='mse')
+
+이 코드는 독립 ,종속을 설정해주면 알아서 그에 해당하는 공식을 만들어준다...ㄷㄷ 사진 4 참고
+용어는 사진 5 참고
+
+만약에
+X = tf.keras.layers.Input(shape=[12])
+Y = tf.keras.layers.Dense(2)(X)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+라고 해보자 그렇가면 독립>>종속이 두 번해야 될것이다 사진 6 참고 
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+12강-보스턴집값 수식 
+print(독립) 	출력시 전체가 출력 되며
+print(독립[0:5])	이런식으로 슬라이스 할 수 있다
+여기서 
+
+print(model.get_weights())
+으로 인헤서 생긴 이 값들의 관계로 인한 식은 사진 5와 7을 보면 된다
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+13강-학습의 실제(with 워크북)
+https://www.youtube.com/watch?v=ItKi514Ly-4&list=PLl1irxoYh2wyLwJutUZx5Q_QEEDZoXBnz&index=13
+https://docs.google.com/spreadsheets/d/11DAONRZ92ob0T0YRIT5KgU9vNeO28bYNvteu_-fbRV0/edit#gid=0
+
+코드 안에 원리 파트이다.
+중요하다
+지금일단 가볍게 보고 나중에 수학이 더 필요해지면 그때 도움이 되다면 다시 보도록 하자
+
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+14강-아이리스 품종 분류
+사진 8참고
+종속변수 	양적	회귀(regression)	
+		범주형	분류(classification)	
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+15강-원핫인코딩(범주테이터를 숫자데이터로 바꿔주는 것)
+16강-softmax
+17강-아이리스 품종 분류 (실습)
+
+범주형은 수식이 바로 벼형 할 수 없다 사진 9 참고
+범주형은 수식으로 사용하려면 한가지 과정을 거쳐야한다 
+원핫인코딩
+종속변수만 가져와서 사진 10을 참조
+
+
+# 라이브러리 사용
+import tensorflow as tf
+import pandas as pd
+
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/iris.csv'
+아이리스 = pd.read_csv(파일경로)
+아이리스.head()
+
+# 원핫인코딩
+인코딩 = pd.get_dummies(아이리스)		#데이터 내에 범주형 변수들만 골라서 원핫인코딩해주는 함수
+인코딩.head()				#사진 11 참고
+
+# 칼럼이름 출력
+print(인코딩.columns)
+
+# 독립변수, 종속변수
+독립 = 인코딩[['꽃잎길이', '꽃잎폭', '꽃받침길이', '꽃받침폭']]
+종속 = 인코딩[['품종_setosa', '품종_versicolor', '품종_virginica']]
+print(독립.shape, 종속.shape)
+
+
+
+# 2. 모델의 구조를 만듭니다				사진 12 참고
+X = tf.keras.layers.Input(shape=[4])
+Y = tf.keras.layers.Dense(3, activation='softmax')(X)	
+model = tf.keras.models.Model(X, Y)
+#분류 예측을 사람의 말처럼 비가 올 확률 30%, 합격할 확률 99% 등등
+#분류모델이 사람이 표현 하듯이 확률로 표현해주는 주면 좋을 것이다. 
+#ex)sigmoid, softmax 가 대표적이다
+#요지는 컴퓨터가 정답을 확률로 표현하게 하고싶다 사진 14,15,16 참고
+#사진 16에서 감싸는 함구사 softmax 이고 위의 역할을 한다 
+
+model.compile(loss='categorical_crossentropy',metrics='accuracy')
+#지금은 loss가 상황마다 다른 것을 사용한다는 정도만 알고 넘기자
+#분류에 사용하는 loss는 categorical_crossentropy
+#회귀에 사용하는 loss는 mse
+
+#여기서 metrics='accuracy' 정확도를 표현해준다 높아야 결과가 좋다.
+#사진 17 참고
+
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=100)
+
+# 모델을 이용합니다. 
+# 맨 처음 데이터 5개
+print(model.predict(독립[:5]))
+print(종속[:5])
+
+#---------------------------------------------------------
+#  [[0.3565614  0.06404484 0.57939374]
+#  [0.34542185 0.08696508 0.56761307]
+#  [0.34824476 0.07590912 0.57584614]
+#  [0.33829892 0.08804113 0.57365996]
+#  [0.35599202 0.0610163  0.5829917 ]]
+#   품종_setosa  품종_versicolor  품종_virginica
+# 0          1              0             0
+# 1          1              0             0
+# 2          1              0             0
+# 3          1              0             0
+# 4          1              0             0
+#---------------------------------------------------------
+
+# 맨 마지막 데이터 5개
+print(model.predict(독립[-5:]))
+print(종속[-5:])
+
+
+# weights & bias 출력
+print(model.get_weights())
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+18강-히든레이어
+신경망을 깊게 만들어보자 
+입력(input layer)   --hidden layer--  결과(output laywer)
+기존에 퍼셉트론을 여러개 사용하여 연결만 하면 거대한 인공신경망을 만들어진다
+사진 19 참고 각기 하나씩 보면 하나의 퍼셉트론이다
+
+
+#2.모델의 구조를 만듭니다
+기존 코드에 히든레이어 추가
+X = tf.keras.layers.Input(shape=[13])
+H= tf.keras.layers.Dense(5, activation='swish')(X)	#히든레이어 활성화 함수는 swish	
+Y = tf.keras.layers.Dense(1)(H)			#독립변수가 X가 아리나 H이다.		
+model = tf.keras.models.Model(X, Y)			
+model.compile(loss='mse')
+
+
+히든레이어 추가
+X = tf.keras.layers.Input(shape=[13])
+H= tf.keras.layers.Dense(5, activation='swish')(X)	
+H= tf.keras.layers.Dense(3, activation='swish')(H)	
+H= tf.keras.layers.Dense(1, activation='swish')(H)	
+Y = tf.keras.layers.Dense(1)(H)			
+model = tf.keras.models.Model(X, Y)			
+model.compile(loss='mse')
+
+
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+#19강-히든레이어 실습
+# 라이브러리 사용
+import tensorflow as tf
+import pandas as pd
+
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/boston.csv'
+보스턴 = pd.read_csv(파일경로)
+
+# 종속변수, 독립변수
+독립 = 보스턴[['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax','ptratio', 'b', 'lstat']]
+종속 = 보스턴[['medv']]
+print(독립.shape, 종속.shape)
+
+
+# 2. 모델의 구조를 만듭니다
+X = tf.keras.layers.Input(shape=[13])
+H = tf.keras.layers.Dense(10, activation='swish')(X)
+Y = tf.keras.layers.Dense(1)(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+# 모델 구조 확인
+model.summary()
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=1000 , verbose=0)
+model.fit(독립, 종속, epochs=10)
+
+# 4. 모델을 이용합니다
+print(model.predict(독립[:5]))
+print(종속[:5])
+
+
+
+
+
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/iris.csv'
+아이리스 = pd.read_csv(파일경로)
+
+# 원핫인코딩
+아이리스 = pd.get_dummies(아이리스)
+
+# 종속변수, 독립변수
+독립 = 아이리스[['꽃잎길이', '꽃잎폭', '꽃받침길이', '꽃받침폭']]
+종속 = 아이리스[['품종_setosa', '품종_versicolor', '품종_virginica']]
+print(독립.shape, 종속.shape)
+
+# 2. 모델의 구조를 만듭니다
+X = tf.keras.layers.Input(shape=[4])
+H = tf.keras.layers.Dense(8, activation="swish")(X)
+H = tf.keras.layers.Dense(8, activation="swish")(H)
+H = tf.keras.layers.Dense(8, activation="swish")(H)
+Y = tf.keras.layers.Dense(3, activation='softmax')(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='categorical_crossentropy', metrics='accuracy')
+
+# 모델 구조 확인
+model.summary()
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=100)
+
+# 4. 모델을 이용합니다
+print(model.predict(독립[0:5]))
+print(종속[0:5])
+---------------------------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------------
+20강-데이터를 위한 팁(appendix 1)
+판다스는 숫자로 되어있으면 범주형 칼럼을 인지를 못한다
+아이리스 파트에서 전부 숫자로 되어있는데 한 칼럼을 범주형으로 인식해야한다고 생각해보자
+숫자로 되어있기때문에 희귀로 판단할 것이다.
+
+# 라이브러리 사용
+import pandas as pd
+
+# 파일 읽어오기
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/iris2.csv'
+아이리스 = pd.read_csv(파일경로)
+아이리스.head()
+
+# 원핫인코딩 되지 않는 현상 확인
+인코딩 = pd.get_dummies(아이리스)
+인코딩.head()
+
+# 칼럼의 데이터 타입 체크
+print(아이리스.dtypes)
+#타입이 category이거나 object일때만 인식을 한다 
+
+# 품종 타입을 범주형으로 바꾸어 준다. 
+아이리스['품종'] = 아이리스['품종'].astype('category')
+print(아이리스.dtypes)
+
+
+# 카테고리 타입의 변수만 원핫인코딩
+인코딩 = pd.get_dummies(아이리스)
+인코딩.head()
+
+# NA값을 체크해 봅시다. 
+#NA는 값이 기록되지 않았거나 관측되지 않은 경우 데이터에 저장되는 값으로 '결측치'라고 부른다.
+아이리스.isna().sum()
+아이리스.tail()
+
+# NA값에 꽃잎폭 평균값을 넣어주는 방법
+mean = 아이리스['꽃잎폭'].mean()
+print(mean)
+아이리스['꽃잎폭'] = 아이리스['꽃잎폭'].fillna(mean)
+아이리스.tail()
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+21강- 모델을 위한 팁 (appendix 2)
+loss가 원하는 만큼 떨어지지 않을때
+
+
+# 2. 모델의 구조를 만듭니다
+X = tf.keras.layers.Input(shape=[13])
+H = tf.keras.layers.Dense(8, activation='swish')(X)
+H = tf.keras.layers.Dense(8, activation='swish')(H)
+H = tf.keras.layers.Dense(8, activation='swish')(H)
+Y = tf.keras.layers.Dense(1)(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+
+이 말은
+
+
+# 2. 모델의 구조를 BatchNormalization layer를 사용하여 만든다.
+X = tf.keras.layers.Input(shape=[13])
+
+H = tf.keras.layers.Dense(8)(X)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+Y = tf.keras.layers.Dense(1)(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+
+와 같다
+여기에
+
+# 2. 모델의 구조를 BatchNormalization layer를 사용하여 만든다.
+X = tf.keras.layers.Input(shape=[13])
+
+H = tf.keras.layers.Dense(8)(X)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+Y = tf.keras.layers.Dense(1)(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+사이에 BatchNormalization()를 사이에 넣어주면 
+loss가 눈에 띄게 떨어진다
+
+
+
+
+#보스턴집값---------------------------------------------------------------------- 
+# 라이브러리 사용 
+import tensorflow as tf
+import pandas as pd
+
+ 
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/boston.csv'
+보스턴 = pd.read_csv(파일경로)
+
+# 종속변수, 독립변수
+독립 = 보스턴[['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax','ptratio', 'b', 'lstat']]
+종속 = 보스턴[['medv']]
+print(독립.shape, 종속.shape)
+
+
+# 2. 모델의 구조를 BatchNormalization layer를 사용하여 만든다.
+X = tf.keras.layers.Input(shape=[13])
+
+H = tf.keras.layers.Dense(8)(X)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+Y = tf.keras.layers.Dense(1)(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='mse')
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=10000 , verbose=0)
+model.fit(독립, 종속, epochs=10)
+
+# 4. 모델을 이용합니다
+print(model.predict(독립[5:10]))
+# 종속변수 확인
+print(종속[5:10])
+
+
+
+
+
+
+
+
+
+#아이리스 품종개량--------------------------------------------------------
+# 라이브러리 사용 
+import tensorflow as tf
+import pandas as pd
+# 1.과거의 데이터를 준비합니다.
+파일경로 = 'https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/iris.csv'
+아이리스 = pd.read_csv(파일경로)
+
+# 원핫인코딩
+아이리스 = pd.get_dummies(아이리스)
+
+# 종속변수, 독립변수
+독립 = 아이리스[['꽃잎길이', '꽃잎폭', '꽃받침길이', '꽃받침폭']]
+종속 = 아이리스[['품종_setosa', '품종_versicolor', '품종_virginica']]
+print(독립.shape, 종속.shape)
+
+
+# 2. 모델의 구조를 BatchNormalization layer를 사용하여 만든다.
+X = tf.keras.layers.Input(shape=[4])
+
+H = tf.keras.layers.Dense(8)(X)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+H = tf.keras.layers.Dense(8)(H)
+H = tf.keras.layers.BatchNormalization()(H)
+H = tf.keras.layers.Activation('swish')(H)
+
+Y = tf.keras.layers.Dense(3, activation='softmax')(H)
+model = tf.keras.models.Model(X, Y)
+model.compile(loss='categorical_crossentropy',metrics='accuracy')
+
+# 3.데이터로 모델을 학습(FIT)합니다.
+model.fit(독립, 종속, epochs=1000 , verbose=0)
+model.fit(독립, 종속, epochs=10)
+
+# 모델을 이용합니다. 
+# 맨 처음 데이터 5개
+print(model.predict(독립[:5]))
+print(종속[:5])
+
+# 맨 마지막 데이터 5개
+print(model.predict(독립[-5:]))
+print(종속[-5:])
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+22강-마무리
+표를 학습시켜서 모델을 만드는 학습
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
